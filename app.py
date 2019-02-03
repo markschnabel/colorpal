@@ -1,56 +1,54 @@
 from flask import Flask, request, jsonify, make_response
-from werkzeug.utils import secure_filename
-import requests
-import uuid
-import os
-import time
-from palette import generate_palette
+import numpy as np 
+import cv2 
+from palette import preprocess, extract_palette 
+
+app = Flask(__name__) 
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
-app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = os.path.abspath(os.path.dirname(__file__)) + '\images'
-
-def is_valid_image(filename):
-    """Helper function for validating the file uploaded by the user to ensure
-    the it actually is an image file with one of the extensions in ALLOWED_EXTENSIONS
+def validate_extension(filename):
+    """Helper function for validating that the file provided by the user is 
+    actually an image file with one of the extensions
     """
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/api/generate_palette/upload', methods=["POST"])
-def generate_palette_from_upload():
-    print('rout hit')
-    """Route for generating color palettes given an image file."""
-    if 'image' not in request.files:
-        return make_response(jsonify({'error': '"image" not provided'}), 400)
+@app.route('/api/generate_palettes/upload', methods=["POST"])
+def generate_palettes_from_upload():
+    """Route for generating color palettes via direct upload."""   
 
+    # Validate the uploaded file:
+    if not request.files:
+        return make_response(jsonify({'error': 'File required.'}), 400)
+    if 'image' not in request.files:
+        return make_response(jsonify({'error': 'Image field was not provided'}), 400)
+    
     image = request.files['image']
 
-    if image.filename == '':
-        return make_response(
-            jsonify({'error': 'filename cannot be empty'}), 
+    if not validate_extension(image.filename):
+        return make_response(jsonify(
+            {'error': 'It seems the image you\'ve submitted is invalid. Please make ' 
+            + 'sure the image uses on of the following extensions .jpg, jpeg or .png.'}), 
             400
         )
 
-    if not is_valid_image(image.filename):
+    try:
+        # Try to pre-process the image, if this succeeds the input was valid and
+        # the result can be directly passed to the generate_palette function 
+        # since it will only be working with properly formatted numpy arrays from 
+        # here on. If it fails the input was not valid.
+        preprocessed_image = preprocess(image)
+    except:
         return make_response(
-            jsonify({'error': 'image must have of extension: .jpeg, .jpg, or .png'}), 
-            400
-        )
+            jsonify(
+                {"error": "The uploaded image could not be read."}), 
+                400
+            )
 
-    filename = str(uuid.uuid4().hex) + secure_filename(image.filename)
-    image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    color_palette = extract_palette(preprocessed_image)
 
-    image.save(image_path)
-    color_palette = generate_palette(image_path)
-    os.remove(image_path)
-    
-    if 'error' in color_palette:
-        return make_response(jsonify({'error': color_palette['error']}), 400)
+    return make_response(jsonify(color_palette), 200)
 
-    return jsonify({"color_palette": color_palette})
-
-
-if __name__ == '__main__':
+if __name__ == '__main__': 
     app.run(debug=True)
