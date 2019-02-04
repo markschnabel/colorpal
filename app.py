@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 import numpy as np 
 import cv2 
-from palette import preprocess, extract_palette 
+from palette import preprocess, generate_palettes 
 
 app = Flask(__name__) 
 
@@ -46,7 +46,7 @@ def generate_palettes_from_upload():
                 400
             )
 
-    color_palette = extract_palette(preprocessed_image)
+    color_palette = generate_palettes(preprocessed_image)
 
     return make_response(jsonify(color_palette), 200)
 
