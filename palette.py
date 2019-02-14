@@ -5,6 +5,17 @@ import requests
 
 COLORMIND_API = 'http://colormind.io/api/'
 
+def clamp(x): 
+  return max(0, min(x, 255))
+
+def rgb_to_hex(rgb_arr):
+    hex = "#{0:02x}{1:02x}{2:02x}".format(
+        clamp(rgb_arr[0]), 
+        clamp(rgb_arr[1]), 
+        clamp(rgb_arr[2])
+    )
+    return hex.upper()
+
 def preprocess(image):
     """Function to preprocess the image so that it is in the correct format to 
     work with for the color extraction process.
@@ -32,7 +43,8 @@ def preprocess(image):
 
 def cluster(image):
     """Function to perform K-Means clustering on an image to determine natural 
-    clusters in the color data."""
+    clusters in the color data.
+    """
     mini_kmeans = MiniBatchKMeans(n_clusters=5).fit(image)
     rgb_values = mini_kmeans.cluster_centers_
     labels = mini_kmeans.labels_
@@ -63,7 +75,10 @@ def extract_palette(image):
         # Build the palette as a string. Used for calling the colormind api.
         palette_as_string +=  '[' + ','.join(map(str, rgb)) + ']' + (',' if i != 1 else '')
 
-        base_color_palette.append({ "rgb": rgb })
+        base_color_palette.append({ 
+            "hex": rgb_to_hex(rgb),
+            "rgb": rgb 
+        })
         i -= 1
     
     return (base_color_palette, palette_as_string)
@@ -71,12 +86,13 @@ def extract_palette(image):
 def fetch_enhanced_palette(palette_as_string):
     """This method uses the natural palette obtained from quantizing the uploaded 
     photo to call the colormind.io API to retrieve a color palette that has been
-    selected by a ML algorithm based on the colors we provide it."""
+    selected by a ML algorithm based on the colors we provide it.
+    """
     try:
         # Try to access the API, if successful return the result
         data = '{"input":[' + palette_as_string + '],"model":"default"}'
         response_json = requests.post(COLORMIND_API, data.encode()).json()['result']
-        mapped_response = map(lambda rgb: {"rgb": rgb}, response_json)
+        mapped_response = map(lambda rgb: {"hex": rgb_to_hex(rgb), "rgb": rgb}, response_json)
         return list(mapped_response)
     except:
         # Else return error message
@@ -86,8 +102,8 @@ def generate_palettes(image):
     """Function which calls extract_palette to extract the color palette of a 
     given image and then uses that data to call a machine learning API to get an
     enhanced version of that palette, as palettes stripped directly from photos
-    may not always be the best."""
-
+    may not always be the best.
+    """
     (base_color_palette, palette_as_string) = extract_palette(image)
 
     enhanced_color_palette = fetch_enhanced_palette(palette_as_string)
