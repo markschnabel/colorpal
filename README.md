@@ -82,10 +82,6 @@ An example of the end result can be seen below:
 <br /><br />
 ![ColorPal Results Page](https://user-images.githubusercontent.com/36283037/54255948-7aa6a880-4530-11e9-85bb-727888d94c31.png)
 
-
-If you would like to find out more about how the API works make sure to check out the API repository here: [https://github.com/markschnabel/colorpal-api](https://github.com/markschnabel/colorpal-api)
-
-
 ## Coming Soon
 
 As stated above the app is currently still in development. There are numerous features I would like to add to the app. This list is to serve as a personal reminder and way to commit myself to completing them. If you would like to contribute to the project feel free to contact me!
