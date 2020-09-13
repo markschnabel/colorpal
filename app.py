@@ -1,30 +1,28 @@
 from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS
-import numpy as np 
-import cv2 
+import numpy as np
+import cv2
 import urllib
-from palette import preprocess, generate_palettes 
+from palette import preprocess, generate_palettes
 
-app = Flask(__name__) 
+app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
-
 def validate_extension(filename):
-    """Helper function for validating that the file provided by the user is 
+    """Helper function for validating that the file provided by the user is
     actually an image file with one of the extensions
     """
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 @app.route('/api/get_palettes/upload', methods=["POST"])
 def get_palettes_from_upload():
     """Route for generating color palettes via direct upload."""
     if not request.files:
         return make_response(jsonify({'error': 'File required.'}), 400)
-        
+
     if 'image' not in request.files:
         return make_response(jsonify({'error': 'No image was provided'}), 400)
 
@@ -43,14 +41,13 @@ def get_palettes_from_upload():
         image = preprocess(image)
     except:
         return make_response(
-            jsonify({"error": "The uploaded image could not be read."}), 
+            jsonify({"error": "The uploaded image could not be read."}),
             400
         )
 
     palettes = generate_palettes(image)
 
     return make_response(jsonify(palettes), 200)
-
 
 @app.route('/api/get_palettes/url', methods=['POST'])
 def get_palettes_from_url():
@@ -60,13 +57,13 @@ def get_palettes_from_url():
 
     if 'url' not in request.get_json():
         return make_response(jsonify({'error': 'No URL was provided.'}), 400)
-    
+
     url = request.get_json()['url']
 
     if not validate_extension(url):
         return make_response(jsonify(
             {'error': 'It seems the URL you\'ve submitted is invalid. Please make '
-            + 'sure it leads directly to an image and ends in either: .jpg, jpeg or .png.'}), 
+            + 'sure it leads directly to an image and ends in either: .jpg, jpeg or .png.'}),
             400
         )
 
@@ -75,7 +72,7 @@ def get_palettes_from_url():
     except:
         return make_response(
             jsonify({"error": "Could not retrieve the image from the provided URL. "
-            + "The server hosting it may not allow external requests. Please try again."}), 
+            + "The server hosting it may not allow external requests. Please try again."}),
             400
         )
 
@@ -86,7 +83,7 @@ def get_palettes_from_url():
         image = preprocess(image)
     except:
         return make_response(
-            jsonify({"error": "The image retrieved from the URL could not be read."}), 
+            jsonify({"error": "The image retrieved from the URL could not be read."}),
             400
         )
 
