@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 
 import reducers from './reducers';
 
+import 'typeface-puritan';
 import './stylesheets/index.css';
 
 const store = createStore(reducers);
