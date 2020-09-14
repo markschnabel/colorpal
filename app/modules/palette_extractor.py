@@ -3,14 +3,18 @@ import numpy as np
 import cv2
 import requests
 
+from .color_converter import ColorConverter
+
 MAX_CLUSTERS = 5
 
 class PaletteExtractor():
+    def __init__(self):
+        self.__converter = ColorConverter()
+
     def extract(self, image):
         processed_image = self.__preprocess_image(image)
         rgb_clusters = self.__generate_color_clusters(processed_image)
-
-        palette = self.__format_palette(rgb_clusters)
+        palette = self.__generate_palette_from_clusters(rgb_clusters)
 
         return palette
 
@@ -40,7 +44,16 @@ class PaletteExtractor():
         mini_kmeans = MiniBatchKMeans(n_clusters=MAX_CLUSTERS).fit(image)
         rgb_clusters = mini_kmeans.cluster_centers_
 
-        return rgb_clusters
-
-    def __format_palette(self, rgb_clusters):
+        # convert to ints before returning
         return np.round(rgb_clusters).astype('int').tolist()
+
+    def __generate_palette_from_clusters(self, rgb_clusters):
+        palette = []
+
+        for cluster in rgb_clusters:
+            palette.append({
+                'rgb': cluster,
+                'hex': self.__converter.rgb_to_hex(cluster)
+            })
+
+        return palette
