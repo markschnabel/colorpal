@@ -5,6 +5,8 @@ export default {
   primaryColor: '#5eaaa8',
   primaryColorLight: '#a3d2ca',
 
-  black: '#000',
-  white: '#F7F7F7',
+  neutralColorDarkest: '#000000',
+
+  neutralColorLighter: '#DDDDDD',
+  neutralColorLightest: '#F7F7F7'
 };
