@@ -1,9 +1,7 @@
-const initialState = {
-  hello: 'world'
-};
+import { combineReducers } from 'redux';
 
-const rootReducer = (state = initialState, _action) => {
-  return state;
-};
+import { extractPaletteReducer } from './palette';
 
-export default rootReducer;
+export default combineReducers({
+  palette: extractPaletteReducer
+});
