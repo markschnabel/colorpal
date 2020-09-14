@@ -33,10 +33,6 @@ const DragAndDropContainer = styled.div`
   margin-top: 48px;
 `;
 
-const HelperText = styled.p`
-
-`;
-
 const ACCEPTED_FILE_TYPES = "image/jpeg, image/png";
 const MAX_FILE_SIZE = 5000000; // 5 mb
 
