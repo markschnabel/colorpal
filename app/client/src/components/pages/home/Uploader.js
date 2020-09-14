@@ -44,10 +44,6 @@ const MAX_FILE_SIZE = 5000000; // 5 mb
 const dropzoneRef = React.createRef();
 
 const Uploader = (props) => {
-  const onClick = (e) => {
-    e.preventDefault();
-  };
-
   const onDrop = (acceptedFiles, rejectedFiles) => {
     const data = new FormData();
     data.append('image', acceptedFiles[0]);
@@ -64,12 +60,12 @@ const Uploader = (props) => {
 
   return (
     <Dropzone
+      ref={dropzoneRef}
       multiple={false}
       accept={ACCEPTED_FILE_TYPES}
       maxSize={MAX_FILE_SIZE}
       onDrop={onDrop}
-      onClick={onClick}
-      ref={dropzoneRef}
+      noClick
     >
       {({ getRootProps, getInputProps, isDragActive }) => (
         <DragAndDropContainer {...getRootProps()} isDragActive={isDragActive}>
