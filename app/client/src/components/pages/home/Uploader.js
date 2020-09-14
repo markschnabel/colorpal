@@ -20,7 +20,7 @@ const UploadButton = styled.button`
 `;
 
 const DragAndDropContainer = styled.div`
-  height: 275px;
+  height: 300px;
   box-shadow: ${props => (props.isDragActive ? "0 0 10px #fff" : null)};
   padding: 24px 0px;
   max-width: 650px;
@@ -30,8 +30,13 @@ const DragAndDropContainer = styled.div`
   background: ${props => props.isDragActive ? "rgba(200, 200, 200, 0.1)" : "transparent"};
   transition: all 0.25s ease;
   margin: auto;
-  margin-top: 48px;
+  margin-top: 64px;
 `;
+
+const HelperText = styled.p`
+  max-width: 450px;
+  margin: auto;
+`
 
 const ACCEPTED_FILE_TYPES = "image/jpeg, image/png";
 const MAX_FILE_SIZE = 5000000; // 5 mb
@@ -50,6 +55,13 @@ const Uploader = (props) => {
     props.extractPalette(data);
   };
 
+  const handleUploadButtonClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    dropzoneRef.current.open();
+  }
+
   return (
     <Dropzone
       multiple={false}
@@ -62,18 +74,18 @@ const Uploader = (props) => {
       {({ getRootProps, getInputProps, isDragActive }) => (
         <DragAndDropContainer {...getRootProps()} isDragActive={isDragActive}>
           <AiOutlineCloudUpload style={{ fontSize: '64px' }} />
-          <p style={{ margin: '12px' }}>
+          <p style={{ margin: '10px' }}>
             Drag and drop an image here
           </p>
-          <UploadButton onClick={() => dropzoneRef.current.open()}>
+          <UploadButton onClick={handleUploadButtonClick}>
             Manual upload
           </UploadButton>
 
-          <p>
+          <HelperText>
             Images must be less than 5MB and use one of the following
             extensions: <strong>.jpg</strong>, <strong>.jpeg</strong> or
             <strong>.png</strong>
-          </p>
+          </HelperText>
 
           <input {...getInputProps()} />
         </DragAndDropContainer>
