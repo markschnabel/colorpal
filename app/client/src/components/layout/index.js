@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Container from '../shared/Container';
+import Navbar from './Navbar';
 import Footer from './Footer';
 
 const Content = styled.div`
-  min-height: 70vh;
+  min-height: 75vh;
   height: 100%;
   padding-bottom: 60px;
 `;
@@ -13,6 +14,7 @@ const Content = styled.div`
 const Layout = ({ children }) => {
   return (
     <>
+      <Navbar />
       <Container>
         <Content>
           {children}
