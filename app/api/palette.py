@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask_restful.reqparse import RequestParser
 from werkzeug.datastructures import FileStorage
 
-from ..modules.palette_extractor import PaletteExtractor
+from ..lib.palette_extractor import PaletteExtractor
 
 class Palette(Resource):
     def __init__(self):
