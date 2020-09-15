@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { extractPalette } from '../actions/palette';
-import { WaveSpinner } from 'react-spinners-kit';
 
 import Uploader from '../components/pages/home/Uploader';
+import Loading from '../components/pages/home/Loading';
 import Results from '../components/pages/home/Results';
 
 const HomePageContainer = styled.div`
@@ -19,7 +19,7 @@ const Home = ({ extractPalette, palette }) => {
 
       {(() => {
         if (palette.loading) {
-          return <WaveSpinner size={125} style={{ margin: '32px auto' }} color="#686769" />;
+          return <Loading />;
         }
 
         if (palette.palette && palette.image) {
