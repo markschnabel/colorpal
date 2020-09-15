@@ -1,0 +1,11 @@
+{
+  "name": "colorpal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:markschnabel/colorpal-api.git",
+  "author": "Mark <mark.schnabel@markschnabel.com>",
+  "license": "MIT",
+  "scripts": {
+    "heroku-prebuild": "cd app/client && yarn install && yarn build"
+  }
+}
