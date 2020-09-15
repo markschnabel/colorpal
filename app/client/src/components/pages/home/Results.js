@@ -9,6 +9,7 @@ const UploadedImage = styled.img`
   height: 100%;
   border-radius: 8px;
   object-fit: cover;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.20);
 `;
 
 const ColorGrid = styled.div`
@@ -25,6 +26,7 @@ const Swatch = styled.div`
   border-radius: 8px;
   margin: 12px;
   cursor: pointer;
+  box-shadow: 0 15px 20px rgba(0, 0, 0, 0.20);
 `;
 
 const Color = ({ color }) => {
