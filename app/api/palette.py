@@ -1,4 +1,4 @@
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from flask_restful.reqparse import RequestParser
 from werkzeug.datastructures import FileStorage
 
@@ -14,6 +14,9 @@ class Palette(Resource):
 
         args = self.__parser.parse_args()
 
-        palette = self.__extractor.extract(args['image'])
+        try:
+            palette = self.__extractor.extract(args['image'])
 
-        return { 'palette': palette }
+            return { 'palette': palette }
+        except:
+            abort(422, message='The uploaded image could not be processed')
