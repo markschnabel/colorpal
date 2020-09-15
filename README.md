@@ -6,6 +6,8 @@ A SPA/REST based application built with Python, Flask, JavaScript and React whic
 
 To read more visit: https://color-pal.herokuapp.com/about
 
+![image](./Colorpal.png)
+
 ## Getting started
 
 ### Development
