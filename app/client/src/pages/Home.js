@@ -5,18 +5,11 @@ import { extractPalette } from '../actions/palette';
 import { WaveSpinner } from 'react-spinners-kit';
 
 import Uploader from '../components/pages/home/Uploader';
+import Results from '../components/pages/home/Results';
 
 const HomePageContainer = styled.div`
   text-align: center;
   padding: 48px;
-`;
-
-const DescriptionText = styled.p`
-  font-weight: light;
-  max-width: 700px;
-  margin: auto;
-  font-size: 18px;
-  margin-top: 20px;
 `;
 
 const Home = ({ extractPalette, palette }) => {
@@ -24,19 +17,16 @@ const Home = ({ extractPalette, palette }) => {
     <HomePageContainer>
       <h1>Colorpal</h1>
 
-      <DescriptionText>
-        ColorPal is a tool that allows you to turn images into color palettes for whatever project you may want to use them for.
-        Simply submit an image down below and we'll extract it's primary colors and create your perfect palette.
-      </DescriptionText>
-
       {(() => {
-        if (palette.loading)
-          return <WaveSpinner size={125} style={{ margin: '32px auto' }} color="#686769" />
+        if (palette.loading) {
+          return <WaveSpinner size={125} style={{ margin: '32px auto' }} color="#686769" />;
+        }
 
-        if (!palette.palette)
-          return <Uploader extractPalette={extractPalette} />
+        if (palette.palette && palette.image) {
+          return <Results palette={palette.palette} image={palette.image} />;
+        }
 
-        return <h1>{palette.palette.map(p => JSON.stringify(p)).join(', ')}</h1>
+        return <Uploader extractPalette={extractPalette} />;
       })()}
 
     </HomePageContainer>
@@ -45,6 +35,7 @@ const Home = ({ extractPalette, palette }) => {
 
 const mapStateToProps = state => ({
   palette: state.palette,
+  image: state.image,
   loading: state.loading,
   errors: state.errors,
 });

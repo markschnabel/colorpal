@@ -6,7 +6,7 @@ export const paletteActionTypes = Object.freeze({
   EXTRACT_PALETTE_ERROR: 'EXTRACT_PALETTE_ERROR'
 });
 
-export const extractPalette = data => {
+export const extractPalette = (data, image) => {
   return async dispatch => {
     dispatch({ type: paletteActionTypes.EXTRACT_PALETTE });
 
@@ -15,7 +15,8 @@ export const extractPalette = data => {
 
       dispatch({
         type: paletteActionTypes.EXTRACT_PALETTE_SUCCESS,
-        palette
+        palette,
+        image
       });
     } catch (err) {
       const error = err.response.data.message;

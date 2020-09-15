@@ -3,6 +3,7 @@ import { paletteActionTypes } from '../actions/palette';
 const initialState = {
   loading: false,
   palette: null,
+  image: null,
   error: null
 };
 
@@ -12,6 +13,7 @@ export const extractPaletteReducer = (state = initialState, action) => {
       return {
         loading: true,
         palette: null,
+        image: null,
         error: null
       };
 
@@ -19,6 +21,7 @@ export const extractPaletteReducer = (state = initialState, action) => {
       return {
         loading: false,
         palette: action.palette,
+        image: action.image,
         error: null
       };
 
@@ -26,6 +29,7 @@ export const extractPaletteReducer = (state = initialState, action) => {
       return {
         loading: false,
         palette: null,
+        image: null,
         error: action.error
       };
 
