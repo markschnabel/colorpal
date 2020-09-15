@@ -71,7 +71,7 @@ const Uploader = (props) => {
   return (
     <>
       <DescriptionText>
-        ColorPal is a tool that allows you to turn images into color palettes for whatever project you may want to use them for.
+        Colorpal is a tool that allows you to turn images into color palettes for whatever project you may want to use them for.
         Simply submit an image down below and we'll extract it's primary colors and create your perfect palette.
       </DescriptionText>
       <Dropzone

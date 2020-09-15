@@ -63,7 +63,7 @@ const Navbar = () => {
       <Container>
         <FlexContainer>
           <span>
-            <StyledNavLink to="/" exact={true} activeClassName="active">ColorPal</StyledNavLink>
+            <StyledNavLink to="/" exact={true} activeClassName="active">Colorpal</StyledNavLink>
             <StyledNavLink to="/about" activeClassName="active">About</StyledNavLink>
           </span>
           <span>
