@@ -33,6 +33,9 @@ export const extractPaletteReducer = (state = initialState, action) => {
         error: action.error
       };
 
+    case paletteActionTypes.RESET_PALETTE:
+      return initialState;
+
     default:
       return state;
   }

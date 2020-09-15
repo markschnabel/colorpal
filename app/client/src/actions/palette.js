@@ -3,7 +3,8 @@ import ApiClient from '../utils/api_client';
 export const paletteActionTypes = Object.freeze({
   EXTRACT_PALETTE: 'GET_PALLETTE',
   EXTRACT_PALETTE_SUCCESS: 'EXTRACT_PALETTE_SUCCESS',
-  EXTRACT_PALETTE_ERROR: 'EXTRACT_PALETTE_ERROR'
+  EXTRACT_PALETTE_ERROR: 'EXTRACT_PALETTE_ERROR',
+  RESET_PALETTE: 'RESET_PALETTE'
 });
 
 export const extractPalette = (data, image) => {
@@ -28,3 +29,7 @@ export const extractPalette = (data, image) => {
     }
   };
 };
+
+export const resetPalette = () => ({
+  type: paletteActionTypes.RESET_PALETTE
+});

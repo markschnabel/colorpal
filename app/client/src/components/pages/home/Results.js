@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { resetPalette } from '../../../actions/palette';
 import styled from 'styled-components';
 
 const UploadedImage = styled.img`
@@ -39,6 +41,16 @@ const Color = ({ color }) => {
   )
 };
 
+const ResetButton = styled.button`
+  border: none;
+  background: none;
+  text-decoration: underline;
+  font-size: 16px;
+  font-weight: semibold;
+  cursor: pointer;
+  margin: 32px;
+`;
+
 class Results extends Component {
   state = {
     imageSrc: null
@@ -60,7 +72,7 @@ class Results extends Component {
 
   render() {
     const { imageSrc } = this.state;
-    const { palette } = this.props;
+    const { palette, resetPalette } = this.props;
 
     return (
       <div>
@@ -69,9 +81,11 @@ class Results extends Component {
         <ColorGrid>
           {palette.map((color, index) => <Color key={`palette-color-${index}`} color={color} /> )}
         </ColorGrid>
+
+        <ResetButton onClick={resetPalette}>Click here to try again</ResetButton>
       </div>
     )
   }
 }
 
-export default Results;
+export default connect(null, { resetPalette })(Results);
