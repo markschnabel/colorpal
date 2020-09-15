@@ -10,7 +10,7 @@ class Palette(Resource):
         self.__extractor = PaletteExtractor()
 
     def post(self):
-        self.__parser.add_argument('image', type=FileStorage, location='files')
+        self.__parser.add_argument('image', type=FileStorage, location='files', required=True)
 
         args = self.__parser.parse_args()
 
