@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Container from '../shared/Container';
+import Container from '../styled/Container';
 import Navbar from './Navbar';
 import Footer from './Footer';
 

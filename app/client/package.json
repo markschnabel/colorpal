@@ -19,6 +19,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "styled-components": "^5.2.0",
+    "typeface-inter": "^3.15.0",
     "typeface-puritan": "^0.0.72"
   },
   "scripts": {

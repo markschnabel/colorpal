@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Container from '../shared/Container';
+import Container from '../styled/Container';
 
 const StyledFooter = styled.footer`
   height: 100%;
@@ -9,17 +9,27 @@ const StyledFooter = styled.footer`
   width: 100%;
   padding: 25px 0;
   background: #050505;
+  text-align: center;
 `;
 
 const FooterGrid = styled.footer`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(325px, 1fr));
+  width: 70%;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  margin: auto;
+
+  @media only screen and (max-width: 800px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const StyledList = styled.ul`
   padding: 0;
   list-style: none;
   width: 100%;
+  text-align: left;
+  text-align: center;
 `;
 
 const StyledListItem = styled.li`
@@ -36,6 +46,8 @@ const StyledLink = styled.a`
   color: ${({ theme }) => theme.neutralColorLighter};
   font-size: 1.15rem;
   transition: all 0.5s ease;
+  font-family: ${({ theme }) => theme.secondaryFont};
+  font-weight: 200;
 
   &:hover {
     color: ${({ theme }) => theme.primaryColor};
@@ -46,9 +58,10 @@ const StyledLink = styled.a`
 const Copyright = styled.p`
   font-size: 1.15rem;
   font-weight: 500;
-  margin-top: 5%;
-  margin-bottom: 50px;
+  margin: 5% auto 50px auto;
   color: ${({ theme }) => theme.neutralColorLightest};
+  font-family: ${({ theme }) => theme.secondaryFont};
+  font-weight: 200;
 `;
 
 const ExternalLink = ({ href, text }) => {
@@ -64,18 +77,6 @@ const Footer = () => {
     <StyledFooter>
       <Container>
         <FooterGrid>
-          <StyledList>
-            <StyledListItem>
-              <Title>Source Code:</Title>
-            </StyledListItem>
-            <StyledListItem>
-              <ExternalLink
-                href="https://github.com/markschnabel/colorpal"
-                text="GitHub"
-              />
-            </StyledListItem>
-          </StyledList>
-
           <StyledList>
             <StyledListItem>
               <Title>Creator:</Title>
@@ -94,12 +95,24 @@ const Footer = () => {
             <StyledListItem>
               <ExternalLink
                 href="https://www.linkedin.com/in/mark-j-schnabel/"
-                text="Linked In"
+                text="LinkedIn"
               />
             </StyledListItem>
             <StyledListItem>
               <ExternalLink
                 href="https://github.com/markschnabel/"
+                text="GitHub"
+              />
+            </StyledListItem>
+          </StyledList>
+
+          <StyledList>
+            <StyledListItem>
+              <Title>Source Code:</Title>
+            </StyledListItem>
+            <StyledListItem>
+              <ExternalLink
+                href="https://github.com/markschnabel/colorpal"
                 text="GitHub"
               />
             </StyledListItem>

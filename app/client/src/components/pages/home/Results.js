@@ -26,17 +26,23 @@ const Swatch = styled.div`
   height: 100px;
   width: 100px;
   border-radius: 8px;
-  margin: 14px;
+  margin: 18px;
   cursor: pointer;
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.20);
+`;
+
+const ColorText = styled.p`
+  font-family: ${({ theme }) => theme.secondaryFont};
+  font-weight: 200;
+  margin: 4px;
 `;
 
 const Color = ({ color }) => {
   return (
     <div>
       <Swatch color={color} />
-      <p>{color.hex}</p>
-      <p>{`rgb(${color.rgb.join(', ')})`}</p>
+      <ColorText>{color.hex}</ColorText>
+      <ColorText>{`rgb(${color.rgb.join(', ')})`}</ColorText>
     </div>
   )
 };

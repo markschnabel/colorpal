@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FaGithub } from 'react-icons/fa';
 import { NavLink} from 'react-router-dom';
 
-import Container from '../shared/Container';
+import Container from '../styled/Container';
 
 const StyledNav = styled.nav`
   padding: 20px 0;
@@ -16,29 +16,19 @@ const FlexContainer = styled.div`
   align-items: center;
 `;
 
-const Brand = styled(NavLink)`
-  margin: 0;
-  margin-right: 25px;
-  display: inline;
-  transition: all 0.5s ease;
-  font-size: 1.75rem;
-  text-decoration: none;
-  color: ${({ theme }) => theme.neutralColorDarkest};
-  font-weight: 200;
-
-  &:hover {
-    color: ${({ theme }) => theme.primaryColorDark};
-    cursor: pointer;
-  }
-`;
-
 const StyledNavLink = styled(NavLink)`
-  text-decoration: none;
   color: ${({ theme }) => theme.neutralColorDarkest};
+  text-decoration: none;
   font-size: 1.15rem;
   font-weight: 200;
   font-size: 1.35rem;
-  transition: all 0.5s ease;
+  font-size: 1.35rem;
+  margin: 16px;
+  transition: color 0.5s ease;
+
+  &.active {
+    font-size: 1.65rem;
+  }
 
   &:hover {
     color: ${({ theme }) => theme.primaryColorDark};
@@ -47,9 +37,10 @@ const StyledNavLink = styled(NavLink)`
 `;
 
 const StyledIcon = styled.a`
-  font-size: 1.35rem;
+  font-size: 1.6rem;
   margin-left: 25px;
   color: ${({ theme }) => theme.neutralColorDarkest};
+  color: ${({ theme }) => theme.neutralColorDark};
   transition: all 0.5s ease;
 
   &:hover {
@@ -72,8 +63,8 @@ const Navbar = () => {
       <Container>
         <FlexContainer>
           <span>
-            <Brand to="/">ColorPal</Brand>
-            <StyledNavLink to="/about">About</StyledNavLink>
+            <StyledNavLink to="/" exact={true} activeClassName="active">ColorPal</StyledNavLink>
+            <StyledNavLink to="/about" activeClassName="active">About</StyledNavLink>
           </span>
           <span>
             <IconLink
