@@ -20,7 +20,18 @@ export const extractPalette = (data, image) => {
         image
       });
     } catch (err) {
-      const error = err.response.data.message;
+      let error;
+
+      try {
+        // If accessing the error like this doesn't work the backend didnt send an error message
+        error = err.response.data.message;
+      } catch (_) {
+        console.log(err);
+      }
+
+      if (!error) {
+        error = 'The uploaded image could not be processed at this time. Please try again.';
+      }
 
       dispatch({
         type: paletteActionTypes.EXTRACT_PALETTE_ERROR,
