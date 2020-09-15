@@ -26,7 +26,7 @@ const Swatch = styled.div`
   height: 100px;
   width: 100px;
   border-radius: 8px;
-  margin: 12px;
+  margin: 14px;
   cursor: pointer;
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.20);
 `;
@@ -36,7 +36,7 @@ const Color = ({ color }) => {
     <div>
       <Swatch color={color} />
       <p>{color.hex}</p>
-      <p>{color.rgb}</p>
+      <p>{`rgb(${color.rgb.join(', ')})`}</p>
     </div>
   )
 };
