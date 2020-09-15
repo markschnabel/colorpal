@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { extractPalette, setPaletteError } from '../../../actions/palette';
 import Dropzone from 'react-dropzone';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import styled from 'styled-components';
@@ -46,6 +48,12 @@ const HelperText = styled.p`
   margin: auto;
 `
 
+const ErrorMessage = styled.p`
+  max-width: 450px;
+  margin: 16px auto;
+  color: #ff0033;
+`
+
 const ACCEPTED_FILE_TYPES = "image/jpeg, image/png";
 const MAX_FILE_SIZE = 5000000; // 5 mb
 
@@ -60,6 +68,26 @@ const Uploader = (props) => {
   }
 
   const handleDrop = (acceptedFiles, rejectedFiles) => {
+    if (acceptedFiles.length + rejectedFiles.length > 1) {
+      props.setPaletteError("Only one file can be processed at a time.");
+
+      return;
+    }
+
+    if (rejectedFiles.length >= 1) {
+      if (rejectedFiles[0].size > MAX_FILE_SIZE) {
+        props.setPaletteError("Files must not exceed 5MB.");
+
+        return;
+      }
+
+      if (!ACCEPTED_FILE_TYPES.split(",").includes(rejectedFiles[0].type)) {
+        props.setPaletteError("Files must end in one of the following extensions: .jpg, .jpeg, or .png.");
+
+        return;
+      }
+    }
+
     const image = acceptedFiles[0];
 
     const data = new FormData();
@@ -74,6 +102,7 @@ const Uploader = (props) => {
         Colorpal is a tool that allows you to turn images into color palettes for whatever project you may want to use them for.
         Simply submit an image down below and we'll extract it's primary colors and create your perfect palette.
       </DescriptionText>
+
       <Dropzone
         ref={dropzoneRef}
         multiple={false}
@@ -102,8 +131,14 @@ const Uploader = (props) => {
           </DragAndDropContainer>
         )}
       </Dropzone>
+
+      <ErrorMessage>{props.error}</ErrorMessage>
     </>
   );
 };
 
-export default Uploader;
+const mapStateToProps = state => ({
+  error: state.palette.error
+});
+
+export default connect(mapStateToProps, { extractPalette, setPaletteError })(Uploader);

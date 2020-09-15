@@ -27,7 +27,6 @@ const Swatch = styled.div`
   width: 100px;
   border-radius: 8px;
   margin: 18px;
-  cursor: pointer;
   box-shadow: 0 15px 20px rgba(0, 0, 0, 0.20);
 `;
 

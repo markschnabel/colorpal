@@ -30,6 +30,11 @@ export const extractPalette = (data, image) => {
   };
 };
 
+export const setPaletteError = (error) => ({
+  type: paletteActionTypes.EXTRACT_PALETTE_ERROR,
+  error
+});
+
 export const resetPalette = () => ({
   type: paletteActionTypes.RESET_PALETTE
 });

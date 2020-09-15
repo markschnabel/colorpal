@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { extractPalette } from '../actions/palette';
 
 import Uploader from '../components/pages/home/Uploader';
 import Loading from '../components/pages/home/Loading';
@@ -12,7 +11,7 @@ const HomePageContainer = styled.div`
   padding: 48px;
 `;
 
-const Home = ({ extractPalette, palette }) => {
+const Home = ({ palette }) => {
   return (
     <HomePageContainer>
       <h1>Colorpal</h1>
@@ -26,7 +25,7 @@ const Home = ({ extractPalette, palette }) => {
           return <Results palette={palette.palette} image={palette.image} />;
         }
 
-        return <Uploader extractPalette={extractPalette} />;
+        return <Uploader />;
       })()}
 
     </HomePageContainer>
@@ -36,8 +35,7 @@ const Home = ({ extractPalette, palette }) => {
 const mapStateToProps = state => ({
   palette: state.palette,
   image: state.image,
-  loading: state.loading,
-  errors: state.errors,
+  loading: state.loading
 });
 
-export default connect(mapStateToProps, { extractPalette })(Home)
+export default connect(mapStateToProps)(Home)
