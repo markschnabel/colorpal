@@ -1,10 +1,6 @@
 # Colorpal
 
-https://color-pal.herokuapp.com/
-
-A SPA/REST based application built with Python, Flask, JavaScript and React which uses K-Means clustering to allow users to upload images and recieve back the color palette of that image.
-
-To read more visit: https://color-pal.herokuapp.com/about
+A web based application that uses a React frontend with a Python/Flask API to extract color palettes from images through the user of OpenCV, image processing techniques and K-Means Clustering. 
 
 ![image](./Colorpal.png)
 
